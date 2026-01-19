@@ -8,7 +8,6 @@ import Image from 'next/image';
 import { Loader2, X } from 'lucide-react';
 
 export default function EditShortcutPage({ params }: { params: Promise<{ id: string }> }) {
-    // Unwrapping params for Next.js 15+
     const { id } = use(params);
 
     const router = useRouter();
@@ -32,7 +31,6 @@ export default function EditShortcutPage({ params }: { params: Promise<{ id: str
                 .single();
 
             if (error) {
-                alert('ไม่พบข้อมูล');
                 router.push('/');
             } else {
                 setForm(data);
@@ -51,7 +49,7 @@ export default function EditShortcutPage({ params }: { params: Promise<{ id: str
         try {
             let finalImageUrl = form.image_url;
 
-            // กรณี: ผู้ใช้เลือกไฟล์ใหม่ -> อัปโหลด
+            // กรณี: อัปโหลดรูปใหม่
             if (file) {
                 const fileName = `${Date.now()}-${file.name}`;
                 const { error: uploadError } = await supabase.storage
@@ -65,24 +63,10 @@ export default function EditShortcutPage({ params }: { params: Promise<{ id: str
                     .getPublicUrl(fileName);
                 finalImageUrl = data.publicUrl;
             }
-            // กรณี: ผู้ใช้ลบรูปเดิมออก และไม่ได้เลือกไฟล์ใหม่ -> ดึง Auto Icon
+            // กรณี: ลบรูปเดิมออก และไม่ได้เลือกไฟล์ใหม่ -> สร้าง Avatar จากชื่อ
             else if (!usingCurrentImg && !file) {
-                try {
-                    const res = await fetch(`/api/search-icon?q=${encodeURIComponent(form.title)}`);
-                    if (res.ok) {
-                        const data = await res.json();
-                        if (data.url) finalImageUrl = data.url;
-                    }
-                } catch (err) {
-                    console.error("Auto icon failed", err);
-                }
-
-                // Fallback Avatar
-                if (!finalImageUrl) {
-                    finalImageUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(form.title)}&background=random&color=fff&size=256`;
-                }
+                finalImageUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(form.title)}&background=00c9c8&color=fff&size=256&font-size=0.33&bold=true`;
             }
-            // กรณี: ใช้รูปเดิม (usingCurrentImg = true) -> ไม่ต้องทำอะไรกับ finalImageUrl
 
             // Update Database
             const { error: updateError } = await supabase
@@ -106,46 +90,52 @@ export default function EditShortcutPage({ params }: { params: Promise<{ id: str
         }
     };
 
-    if (loadingData) return <div className="p-20 text-center text-slate-500">กำลังโหลดข้อมูล...</div>;
+    if (loadingData) return (
+        <div className="flex min-h-screen items-center justify-center bg-[#bffcf9]">
+            <div className="text-[#47817f] flex items-center gap-2">
+                <Loader2 className="animate-spin" /> กำลังโหลดข้อมูล...
+            </div>
+        </div>
+    );
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
-            <form onSubmit={handleUpdate} className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
-                <h2 className="mb-6 text-2xl font-bold text-slate-800">แก้ไขข้อมูล</h2>
+        <div className="flex min-h-screen items-center justify-center bg-[#bffcf9] p-4">
+            <form onSubmit={handleUpdate} className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg border border-[#47817f]/20">
+                <h2 className="mb-6 text-2xl font-bold text-[#000000]">แก้ไขข้อมูล</h2>
 
                 <div className="space-y-4">
                     <div>
-                        <label className="text-sm font-medium text-slate-700">ชื่อเว็บ</label>
+                        <label className="text-sm font-medium text-[#47817f]">ชื่อเว็บ</label>
                         <input
                             required
-                            className="mt-1 w-full rounded-md border p-2 text-slate-900"
+                            className="mt-1 w-full rounded-md border border-[#47817f]/30 p-2 text-[#000000] focus:ring-2 focus:ring-[#00c9c8] focus:border-[#00c9c8] outline-none transition"
                             value={form.title}
                             onChange={e => setForm({ ...form, title: e.target.value })}
                         />
                     </div>
 
                     <div>
-                        <label className="text-sm font-medium text-slate-700">URL</label>
+                        <label className="text-sm font-medium text-[#47817f]">URL</label>
                         <input
                             required type="url"
-                            className="mt-1 w-full rounded-md border p-2 text-slate-900"
+                            className="mt-1 w-full rounded-md border border-[#47817f]/30 p-2 text-[#000000] focus:ring-2 focus:ring-[#00c9c8] focus:border-[#00c9c8] outline-none transition"
                             value={form.url}
                             onChange={e => setForm({ ...form, url: e.target.value })}
                         />
                     </div>
 
                     <div>
-                        <label className="text-sm font-medium text-slate-700">รูปภาพ</label>
+                        <label className="text-sm font-medium text-[#47817f]">รูปภาพ</label>
 
                         {/* แสดงรูปปัจจุบัน ถ้ามี */}
                         {usingCurrentImg && form.image_url && !file && (
-                            <div className="relative mt-2 mb-4 h-40 w-full overflow-hidden rounded-lg border bg-gray-100">
+                            <div className="relative mt-2 mb-4 h-40 w-full overflow-hidden rounded-lg border border-[#47817f]/20 bg-[#bffcf9]">
                                 <Image src={form.image_url} alt="Current" fill className="object-cover" />
-                                {/* ปุ่มลบรูปเดิม เพื่อจะเปลี่ยนใหม่ */}
+                                {/* ปุ่มลบรูปเดิม */}
                                 <button
                                     type="button"
                                     onClick={() => { setUsingCurrentImg(false); setForm({ ...form, image_url: '' }); }}
-                                    className="absolute top-2 right-2 rounded-full bg-red-500 p-1 text-white shadow hover:bg-red-600"
+                                    className="absolute top-2 right-2 rounded-full bg-[#00c9c8] p-1 text-white shadow hover:bg-[#47817f] transition"
                                     title="ลบรูปนี้ (จะใช้ Auto Icon แทน)"
                                 >
                                     <X size={16} />
@@ -153,31 +143,31 @@ export default function EditShortcutPage({ params }: { params: Promise<{ id: str
                             </div>
                         )}
 
-                        {/* ช่องเลือกไฟล์ (แสดงเมื่อไม่ได้ใช้รูปเดิม หรือ อยากเปลี่ยนไฟล์) */}
+                        {/* ช่องเลือกไฟล์ */}
                         {(!usingCurrentImg || file) && (
                             <div className="mt-1">
                                 <input
                                     type="file" accept="image/*"
-                                    className="w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-blue-700"
+                                    className="w-full text-sm text-[#47817f] file:mr-4 file:rounded-full file:border-0 file:bg-[#00c9c8]/10 file:px-4 file:py-2 file:text-[#00c9c8] hover:file:bg-[#00c9c8]/20 transition"
                                     onChange={e => {
                                         setFile(e.target.files?.[0] || null);
-                                        setUsingCurrentImg(false); // ถ้าเลือกไฟล์ แปลว่าไม่เอาอันเก่าแล้ว
+                                        setUsingCurrentImg(false);
                                     }}
                                 />
-                                <p className="mt-2 text-xs text-slate-400">*หากไม่เลือกรูป ระบบจะค้นหาไอคอนให้ใหม่อัตโนมัติจากชื่อเว็บ</p>
+                                <p className="mt-2 text-xs text-[#47817f]/60">*หากไม่เลือกรูป ระบบจะสร้างไอคอนจากชื่อเว็บให้</p>
                             </div>
                         )}
                     </div>
                 </div>
 
                 <div className="mt-8 flex gap-4">
-                    <Link href="/" className="w-full rounded-lg border py-2 text-center text-slate-600 hover:bg-slate-50">
+                    <Link href="/" className="w-full rounded-lg border border-[#47817f]/30 py-2 text-center text-[#47817f] hover:bg-[#bffcf9] transition">
                         ยกเลิก
                     </Link>
                     <button
                         type="submit"
                         disabled={saving}
-                        className="flex w-full items-center justify-center rounded-lg bg-blue-600 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+                        className="flex w-full items-center justify-center rounded-lg bg-[#00c9c8] py-2 text-white hover:bg-[#47817f] disabled:opacity-50 transition shadow-md"
                     >
                         {saving ? <Loader2 className="animate-spin" /> : 'บันทึกการแก้ไข'}
                     </button>

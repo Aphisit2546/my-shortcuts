@@ -10,10 +10,6 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'ui-avatars.com', // (Optional) ใส่เพื่อรองรับรูปจากเว็บอื่นภายนอกด้วย
-      },
-      {
-        protocol: 'https',
-        hostname: '**.thenounproject.com', // รองรับโดเมนของ Noun Project
       }
     ],
   },
