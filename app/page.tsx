@@ -38,33 +38,33 @@ export default function Home() {
   }, [shortcuts, searchQuery]);
 
   return (
-    <main className="min-h-screen bg-[#bffcf9] p-6 md:p-8">
+    <main className="min-h-screen bg-[#000000] p-6 md:p-8">
       <div className="mx-auto max-w-5xl space-y-8">
 
         {/* Header & Search Section */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-[#000000]">เว็บที่ใช้บ่อย 🚀</h1>
-            <p className="text-[#47817f] text-sm mt-1">จัดการทางลัดเว็บไซต์ของคุณ</p>
+            <h1 className="text-3xl font-bold text-[#c6c6c6]">เว็บที่ใช้บ่อย 🚀</h1>
+            <p className="text-[#5e5e5e] text-sm mt-1">จัดการทางลัดเว็บไซต์ของคุณ</p>
           </div>
 
           <div className="flex gap-3">
             {/* 🔍 Search Bar */}
             <div className="relative group">
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-[#47817f]">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-[#5e5e5e]">
                 <Search size={18} />
               </div>
               <input
                 type="text"
                 placeholder="ค้นหาชื่อเว็บ..."
-                className="w-full md:w-64 rounded-lg border border-[#47817f]/30 bg-white py-2 pl-10 pr-8 text-[#000000] shadow-sm outline-none transition focus:border-[#00c9c8] focus:ring-1 focus:ring-[#00c9c8]"
+                className="w-full md:w-64 rounded-lg border border-[#5e5e5e] bg-[#111111] py-2 pl-10 pr-8 text-[#c6c6c6] shadow-sm outline-none transition focus:border-[#c6c6c6] focus:ring-1 focus:ring-[#c6c6c6] placeholder:text-[#5e5e5e]"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute inset-y-0 right-0 flex items-center pr-2 text-[#47817f] hover:text-[#00c9c8]"
+                  className="absolute inset-y-0 right-0 flex items-center pr-2 text-[#5e5e5e] hover:text-[#c6c6c6]"
                 >
                   <X size={16} />
                 </button>
@@ -74,7 +74,7 @@ export default function Home() {
             {/* ปุ่มเพิ่ม */}
             <Link
               href="/add-shortcut"
-              className="flex items-center gap-2 rounded-lg bg-[#00c9c8] px-4 py-2 text-white shadow-md transition hover:bg-[#47817f] hover:shadow-lg whitespace-nowrap"
+              className="flex items-center gap-2 rounded-lg bg-[#c6c6c6] px-4 py-2 text-[#000000] font-medium shadow-md transition hover:bg-[#5e5e5e] hover:text-[#c6c6c6] hover:shadow-lg whitespace-nowrap"
             >
               <Plus size={20} /> <span className="hidden sm:inline">เพิ่มใหม่</span>
             </Link>
@@ -98,11 +98,11 @@ export default function Home() {
             ))
           ) : (
             <div className="col-span-full py-20 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#00c9c8]/10">
-                <Search className="text-[#00c9c8]" size={32} />
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#111111] border border-[#5e5e5e]">
+                <Search className="text-[#5e5e5e]" size={32} />
               </div>
-              <h3 className="text-lg font-medium text-[#000000]">ไม่พบเว็บไซต์ที่ค้นหา</h3>
-              <p className="text-[#47817f]">ลองใช้คำค้นอื่น หรือเพิ่มรายการใหม่</p>
+              <h3 className="text-lg font-medium text-[#c6c6c6]">ไม่พบเว็บไซต์ที่ค้นหา</h3>
+              <p className="text-[#5e5e5e]">ลองใช้คำค้นอื่น หรือเพิ่มรายการใหม่</p>
             </div>
           )}
         </div>

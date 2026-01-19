@@ -38,7 +38,7 @@ export default function AddShortcutPage() {
             }
             // 2. ถ้าไม่เลือกไฟล์ -> ใช้ UI Avatars สร้างจากชื่อทันที
             else {
-                finalImageUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(form.title)}&background=00c9c8&color=fff&size=256&font-size=0.33&bold=true`;
+                finalImageUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(form.title)}&background=5e5e5e&color=c6c6c6&size=256&font-size=0.33&bold=true`;
             }
 
             // 3. บันทึกข้อมูล
@@ -61,17 +61,17 @@ export default function AddShortcutPage() {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-[#bffcf9] p-4">
-            <form onSubmit={handleSubmit} className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg border border-[#47817f]/20">
-                <h2 className="mb-6 text-2xl font-bold text-[#000000]">เพิ่มทางลัดใหม่</h2>
+        <div className="flex min-h-screen items-center justify-center bg-[#000000] p-4">
+            <form onSubmit={handleSubmit} className="w-full max-w-md rounded-xl bg-[#111111] p-8 shadow-lg border border-[#5e5e5e]">
+                <h2 className="mb-6 text-2xl font-bold text-[#c6c6c6]">เพิ่มทางลัดใหม่</h2>
 
                 <div className="space-y-4">
                     {/* Input ชื่อเว็บ */}
                     <div>
-                        <label className="text-sm font-medium text-[#47817f]">ชื่อเว็บ</label>
+                        <label className="text-sm font-medium text-[#c6c6c6]">ชื่อเว็บ</label>
                         <input
                             required
-                            className="mt-1 w-full rounded-md border border-[#47817f]/30 p-2 text-[#000000] focus:ring-2 focus:ring-[#00c9c8] focus:border-[#00c9c8] outline-none transition"
+                            className="mt-1 w-full rounded-md border border-[#5e5e5e] bg-[#1a1a1a] p-2 text-[#c6c6c6] focus:ring-2 focus:ring-[#c6c6c6] focus:border-[#c6c6c6] outline-none transition placeholder:text-[#5e5e5e]"
                             placeholder="Ex. Facebook, Work, Design"
                             value={form.title}
                             onChange={e => setForm({ ...form, title: e.target.value })}
@@ -80,10 +80,10 @@ export default function AddShortcutPage() {
 
                     {/* Input URL */}
                     <div>
-                        <label className="text-sm font-medium text-[#47817f]">URL ลิงก์</label>
+                        <label className="text-sm font-medium text-[#c6c6c6]">URL ลิงก์</label>
                         <input
                             required type="url"
-                            className="mt-1 w-full rounded-md border border-[#47817f]/30 p-2 text-[#000000] focus:ring-2 focus:ring-[#00c9c8] focus:border-[#00c9c8] outline-none transition"
+                            className="mt-1 w-full rounded-md border border-[#5e5e5e] bg-[#1a1a1a] p-2 text-[#c6c6c6] focus:ring-2 focus:ring-[#c6c6c6] focus:border-[#c6c6c6] outline-none transition placeholder:text-[#5e5e5e]"
                             placeholder="https://..."
                             value={form.url}
                             onChange={e => setForm({ ...form, url: e.target.value })}
@@ -92,12 +92,12 @@ export default function AddShortcutPage() {
 
                     {/* Input เลือกรูป */}
                     <div>
-                        <label className="text-sm font-medium text-[#47817f]">
-                            รูปภาพ <span className="text-[#47817f]/60 font-normal">(ถ้าไม่ใส่ จะสร้างไอคอนจากชื่อให้)</span>
+                        <label className="text-sm font-medium text-[#c6c6c6]">
+                            รูปภาพ <span className="text-[#5e5e5e] font-normal">(ถ้าไม่ใส่ จะสร้างไอคอนจากชื่อให้)</span>
                         </label>
                         <input
                             type="file" accept="image/*"
-                            className="mt-1 w-full text-sm text-[#47817f] file:mr-4 file:rounded-full file:border-0 file:bg-[#00c9c8]/10 file:px-4 file:py-2 file:text-[#00c9c8] hover:file:bg-[#00c9c8]/20 transition"
+                            className="mt-1 w-full text-sm text-[#5e5e5e] file:mr-4 file:rounded-full file:border-0 file:bg-[#5e5e5e] file:px-4 file:py-2 file:text-[#000000] file:font-medium hover:file:bg-[#c6c6c6] transition"
                             onChange={e => setFile(e.target.files?.[0] || null)}
                         />
                     </div>
@@ -105,13 +105,13 @@ export default function AddShortcutPage() {
 
                 {/* Action Buttons */}
                 <div className="mt-8 flex gap-4">
-                    <Link href="/" className="w-full rounded-lg border border-[#47817f]/30 py-2 text-center text-[#47817f] hover:bg-[#bffcf9] transition">
+                    <Link href="/" className="w-full rounded-lg border border-[#5e5e5e] py-2 text-center text-[#c6c6c6] hover:bg-[#1a1a1a] transition">
                         ยกเลิก
                     </Link>
                     <button
                         type="submit"
                         disabled={loading}
-                        className="flex items-center justify-center w-full rounded-lg bg-[#00c9c8] py-2 text-white hover:bg-[#47817f] disabled:opacity-50 transition shadow-md"
+                        className="flex items-center justify-center w-full rounded-lg bg-[#c6c6c6] py-2 text-[#000000] font-medium hover:bg-[#5e5e5e] hover:text-[#c6c6c6] disabled:opacity-50 transition shadow-md"
                     >
                         {loading ? (
                             <>

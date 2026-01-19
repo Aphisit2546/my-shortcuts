@@ -20,7 +20,7 @@ export default function ShortcutCard({ id, title, url, imageUrl, onDelete }: Pro
 
     const displayImage = imageUrl
         ? imageUrl
-        : `https://ui-avatars.com/api/?name=${encodeURIComponent(title)}&background=00c9c8&color=fff&size=256&font-size=0.33&bold=true`;
+        : `https://ui-avatars.com/api/?name=${encodeURIComponent(title)}&background=5e5e5e&color=c6c6c6&size=256&font-size=0.33&bold=true`;
 
     const handleDelete = async (e: React.MouseEvent) => {
         e.preventDefault();
@@ -38,10 +38,10 @@ export default function ShortcutCard({ id, title, url, imageUrl, onDelete }: Pro
     };
 
     return (
-        <div className="group relative block overflow-hidden rounded-xl border border-[#47817f]/20 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:border-[#00c9c8]/50">
+        <div className="group relative block overflow-hidden rounded-xl border border-[#5e5e5e] bg-[#111111] shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:border-[#c6c6c6]">
 
             <a href={url} target="_blank" rel="noopener noreferrer" className="block">
-                <div className="relative h-40 w-full bg-[#bffcf9]">
+                <div className="relative h-40 w-full bg-[#1a1a1a]">
                     <Image
                         src={displayImage}
                         alt={title}
@@ -50,8 +50,8 @@ export default function ShortcutCard({ id, title, url, imageUrl, onDelete }: Pro
                     />
                 </div>
                 <div className="p-4">
-                    <h3 className="font-bold text-[#000000] truncate pr-6">{title}</h3>
-                    <p className="text-xs text-[#47817f] truncate">{url}</p>
+                    <h3 className="font-bold text-[#c6c6c6] truncate pr-6">{title}</h3>
+                    <p className="text-xs text-[#5e5e5e] truncate">{url}</p>
                 </div>
             </a>
 
@@ -62,7 +62,7 @@ export default function ShortcutCard({ id, title, url, imageUrl, onDelete }: Pro
                         e.preventDefault();
                         setIsMenuOpen(!isMenuOpen);
                     }}
-                    className="rounded-full bg-white/80 p-1.5 text-[#47817f] shadow-sm backdrop-blur hover:bg-white hover:text-[#00c9c8]"
+                    className="rounded-full bg-[#000000]/80 p-1.5 text-[#c6c6c6] shadow-sm backdrop-blur hover:bg-[#111111] hover:text-white"
                 >
                     <MoreVertical size={18} />
                 </button>
@@ -73,11 +73,11 @@ export default function ShortcutCard({ id, title, url, imageUrl, onDelete }: Pro
                             className="fixed inset-0 z-10"
                             onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); }}
                         />
-                        <div className="absolute right-0 top-8 z-20 w-32 overflow-hidden rounded-lg border border-[#47817f]/20 bg-white shadow-xl">
-                            <Link href={`/edit/${id}`} className="flex w-full items-center gap-2 px-4 py-2 text-sm text-[#47817f] hover:bg-[#bffcf9]">
+                        <div className="absolute right-0 top-8 z-20 w-32 overflow-hidden rounded-lg border border-[#5e5e5e] bg-[#111111] shadow-xl">
+                            <Link href={`/edit/${id}`} className="flex w-full items-center gap-2 px-4 py-2 text-sm text-[#c6c6c6] hover:bg-[#1a1a1a]">
                                 <Edit size={14} /> แก้ไข
                             </Link>
-                            <button onClick={handleDelete} disabled={isDeleting} className="flex w-full items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50">
+                            <button onClick={handleDelete} disabled={isDeleting} className="flex w-full items-center gap-2 px-4 py-2 text-sm text-red-400 hover:bg-[#1a1a1a]">
                                 <Trash2 size={14} /> {isDeleting ? '...' : 'ลบ'}
                             </button>
                         </div>
@@ -85,7 +85,7 @@ export default function ShortcutCard({ id, title, url, imageUrl, onDelete }: Pro
                 )}
             </div>
 
-            <ExternalLink className="pointer-events-none absolute bottom-4 right-4 h-5 w-5 text-[#00c9c8] opacity-0 transition-opacity group-hover:opacity-100" />
+            <ExternalLink className="pointer-events-none absolute bottom-4 right-4 h-5 w-5 text-[#c6c6c6] opacity-0 transition-opacity group-hover:opacity-100" />
         </div>
     );
 }
