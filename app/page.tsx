@@ -86,13 +86,14 @@ export default function Home() {
           {loading ? (
             Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)
           ) : filteredShortcuts.length > 0 ? (
-            filteredShortcuts.map((item) => (
+            filteredShortcuts.map((item, index) => (
               <ShortcutCard
                 key={item.id}
                 id={item.id}
                 title={item.title}
                 url={item.url}
                 imageUrl={item.image_url}
+                index={index}
                 onDelete={handleRemoveItem}
               />
             ))
